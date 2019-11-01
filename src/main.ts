@@ -1,6 +1,9 @@
 import { eventually } from "./eventually";
 
-eventually(() => find("aaa"));
+const result = eventually(() => find("aaa"), 20, 0.2);
+result.then(x => console.log("main result:" + x));
+
+// button = await waitFor($('aaaa'))
 
 let count = 0;
 const find = x => {
@@ -10,6 +13,6 @@ const find = x => {
     return true;
   } else {
     console.log("find: throw error");
-    throw new Error();
+    throw new Error("find failed");
   }
 };

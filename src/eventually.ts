@@ -1,5 +1,3 @@
-console.log("start");
-
 export const eventually = async <R>(
   f: () => R,
   timeout: number = 10,
@@ -20,7 +18,8 @@ export const eventually = async <R>(
   }
 };
 
-const delay = (t: number) => new Promise(x => setTimeout(x, t * 1000));
+const delay = (t: number) =>
+  new Promise(resolve => setTimeout(resolve, t * 1000));
 
 const exec = async <R>(
   f: () => R,
@@ -39,8 +38,7 @@ const exec = async <R>(
 
 class TimeoutError extends Error {
   constructor(timeout, lastError) {
-    const message =
-      "Couldn't execute within ${timeout} seconds. Last Error: ${lastError.message}";
+    const message = `Couldn't execute within ${timeout} seconds. Last Error: ${lastError.message}`;
     super(message);
   }
 }
