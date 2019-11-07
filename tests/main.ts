@@ -1,4 +1,4 @@
-import { eventually } from "./eventually";
+import { eventually } from "../src/eventually";
 
 const result = eventually(() => find("aaa"), 20, 0.2);
 result.then(x => console.log("main result:" + x));
