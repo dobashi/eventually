@@ -1,5 +1,12 @@
-export const eventually = async <R>(
+export const eventuallySync = async <R>(
   f: () => R,
+  timeout: number = 10,
+  interval: number = 1
+): Promise<R> =>
+  eventually(() => new Promise(resolve => f()), timeout, interval);
+
+export const eventually = async <R>(
+  f: () => Promise<R>,
   timeout: number = 10,
   interval: number = 1
 ): Promise<R> => {
@@ -29,7 +36,7 @@ const exec = async <R>(
 ): Promise<R> => {
   if (Date.now() > until.getTime()) throw lastError;
   try {
-    return f();
+    return await f();
   } catch (e) {
     await delay(interval);
     return await exec(f, until, interval, e);
@@ -37,7 +44,7 @@ const exec = async <R>(
 };
 
 class TimeoutError extends Error {
-  constructor(timeout, lastError) {
+  constructor(timeout: number, lastError: Error) {
     const message = `Couldn't execute within ${timeout} seconds. Last Error: ${lastError.message}`;
     super(message);
   }

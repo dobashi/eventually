@@ -6,7 +6,7 @@ result.then(x => console.log("main result:" + x));
 // button = await waitFor($('aaaa'))
 
 let count = 0;
-const find = x => {
+const find = async (x: string) => {
   console.log("find:" + x);
   if (count++ > 10) {
     console.log("find: true");
