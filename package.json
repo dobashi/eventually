@@ -32,8 +32,8 @@
   "scripts": {
     "build": "tsc -d --outDir dist --lib es2019,dom src/eventually.ts",
     "prepare": "npm run build",
-    "test": "npm run build && ts-node src/eventually.ts"
+    "test": "npm run build && ts-node -O '{\"lib\": [ \"es2019\", \"dom\" ]}' tests/eventually.spec.ts"
   },
   "types": "dist/eventually.d.ts",
-  "version": "1.0.3"
+  "version": "1.0.4"
 }

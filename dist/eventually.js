@@ -52,15 +52,34 @@ exports.__esModule = true;
 exports.eventuallySync = function (f, timeout, interval) {
     if (timeout === void 0) { timeout = 10; }
     if (interval === void 0) { interval = 1; }
-    return __awaiter(void 0, void 0, void 0, function () { return __generator(this, function (_a) {
-        return [2 /*return*/, exports.eventually(function () { return new Promise(function (resolve) { return f(); }); }, timeout, interval)];
-    }); });
+    return __awaiter(void 0, void 0, void 0, function () {
+        var start, until, e_1;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    start = Date.now();
+                    until = new Date(start + timeout * 1000);
+                    _a.label = 1;
+                case 1:
+                    _a.trys.push([1, 4, , 5]);
+                    return [4 /*yield*/, delay(interval)];
+                case 2:
+                    _a.sent();
+                    return [4 /*yield*/, execSync(f, until, interval, new UnexecutedError("Not executed yet."))];
+                case 3: return [2 /*return*/, _a.sent()];
+                case 4:
+                    e_1 = _a.sent();
+                    throw new TimeoutError(timeout, e_1);
+                case 5: return [2 /*return*/];
+            }
+        });
+    });
 };
 exports.eventually = function (f, timeout, interval) {
     if (timeout === void 0) { timeout = 10; }
     if (interval === void 0) { interval = 1; }
     return __awaiter(void 0, void 0, void 0, function () {
-        var start, until, e_1;
+        var start, until, e_2;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -75,8 +94,8 @@ exports.eventually = function (f, timeout, interval) {
                     return [4 /*yield*/, exec(f, until, interval, new UnexecutedError("Not executed yet."))];
                 case 3: return [2 /*return*/, _a.sent()];
                 case 4:
-                    e_1 = _a.sent();
-                    throw new TimeoutError(timeout, e_1);
+                    e_2 = _a.sent();
+                    throw new TimeoutError(timeout, e_2);
                 case 5: return [2 /*return*/];
             }
         });
@@ -88,7 +107,7 @@ var delay = function (t) {
 var exec = function (f, until, interval, lastError) {
     if (interval === void 0) { interval = 1; }
     return __awaiter(void 0, void 0, void 0, function () {
-        var e_2;
+        var e_3;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -100,13 +119,38 @@ var exec = function (f, until, interval, lastError) {
                     return [4 /*yield*/, f()];
                 case 2: return [2 /*return*/, _a.sent()];
                 case 3:
-                    e_2 = _a.sent();
+                    e_3 = _a.sent();
                     return [4 /*yield*/, delay(interval)];
                 case 4:
                     _a.sent();
-                    return [4 /*yield*/, exec(f, until, interval, e_2)];
+                    return [4 /*yield*/, exec(f, until, interval, e_3)];
                 case 5: return [2 /*return*/, _a.sent()];
                 case 6: return [2 /*return*/];
+            }
+        });
+    });
+};
+var execSync = function (f, until, interval, lastError) {
+    if (interval === void 0) { interval = 1; }
+    return __awaiter(void 0, void 0, void 0, function () {
+        var e_4;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    if (Date.now() > until.getTime())
+                        throw lastError;
+                    _a.label = 1;
+                case 1:
+                    _a.trys.push([1, 2, , 5]);
+                    return [2 /*return*/, f()];
+                case 2:
+                    e_4 = _a.sent();
+                    return [4 /*yield*/, delay(interval)];
+                case 3:
+                    _a.sent();
+                    return [4 /*yield*/, execSync(f, until, interval, e_4)];
+                case 4: return [2 /*return*/, _a.sent()];
+                case 5: return [2 /*return*/];
             }
         });
     });
