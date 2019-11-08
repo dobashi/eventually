@@ -1,11 +1,8 @@
-import { eventually, eventuallySync } from "../src/eventually";
+import { eventually, eventuallySync } from "../main/eventually";
 
 const sync = eventuallySync(() => true);
-console.log(sync)
-sync.then(x => console.log(`sync result: ${x}`))
-
-
-
+console.log(sync);
+sync.then(x => console.log(`sync result: ${x}`));
 
 const result = eventually(() => find("aaa"), 20, 0.2);
 result.then(x => console.log("main result:" + x));

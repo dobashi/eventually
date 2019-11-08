@@ -30,10 +30,10 @@
     "url": "git://github.com/dobashi/ts-eventually.git"
   },
   "scripts": {
-    "build": "tsc -d --outDir dist --lib es2019,dom src/eventually.ts",
+    "build": "tsc -d --outDir dist --lib es2019,dom src/main/eventually.ts",
     "prepare": "npm run build",
-    "test": "npm run build && ts-node -O '{\"lib\": [ \"es2019\", \"dom\" ]}' tests/eventually.spec.ts"
+    "test": "npm run build && ts-node -O '{\"lib\": [ \"es2019\", \"dom\" ]}' src/test/eventually.spec.ts"
   },
   "types": "dist/eventually.d.ts",
-  "version": "1.0.4"
+  "version": "1.0.5"
 }
