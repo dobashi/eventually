@@ -7,7 +7,12 @@ export const eventuallySync = async <R>(
   const until = new Date(start + timeout * 1000);
   try {
     await delay(interval);
-    return await execSync(f, until, interval, new UnexecutedError());
+    return await execSync(
+      f,
+      until,
+      interval,
+      new UnexecutedError("Not executed yet.")
+    );
   } catch (e) {
     throw new TimeoutError(timeout, e);
   }
@@ -22,7 +27,12 @@ export const eventually = async <R>(
   const until = new Date(start + timeout * 1000);
   try {
     await delay(interval);
-    return await exec(f, until, interval, new UnexecutedError());
+    return await exec(
+      f,
+      until,
+      interval,
+      new UnexecutedError("Not executed yet.")
+    );
   } catch (e) {
     throw new TimeoutError(timeout, e);
   }
@@ -67,8 +77,4 @@ class TimeoutError extends Error {
     super(message);
   }
 }
-class UnexecutedError extends Error {
-  constructor() {
-    super("Not executed yet.");
-  }
-}
+class UnexecutedError extends Error {}
