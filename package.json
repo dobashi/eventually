@@ -5,12 +5,10 @@
     "url": "http://github.com/dobashi"
   },
   "dependencies": {
-    "typings": "^2.1.1"
   },
   "description": "eventually for TypeScript",
   "devDependencies": {
-    "ts-node": "^8.4.1",
-    "typescript": "^3.6.3"
+    "typescript": "^5.0.4"
   },
   "files": [
     "src/",
@@ -35,5 +33,5 @@
     "test": "npm run build && ts-node -O '{\"lib\": [ \"es2019\", \"dom\" ]}' src/test/eventually.spec.ts"
   },
   "types": "dist/eventually.d.ts",
-  "version": "1.0.5"
+  "version": "1.0.6"
 }
